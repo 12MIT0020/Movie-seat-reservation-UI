@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="container input-card">
+            <div class="row">
+                <!-- <p>
+                    No of Quantity:
+                </p> -->
+                <label for="customerName">Customer Name :</label>
+                <input ng-model="customerName"></input>
+            </div>
+            <br><br>
+            <div class="row">
+                <label for="quantityOfTicket">Quantity Of Ticket :</label>
+                <input ng-model="quantityOfTicket" ng-change="setQuantityOfTicket(quantityOfTicket);"></input>
+                <!-- <p>
+                    No of Quantity:
+                </p>
+                <select ng-model="selectedCount" ng-change="seats.setAvailCount(selectedCount)" ng-options="count as count.val for count in quantities"></select> -->
+            </div>
+            <br><br>
+            <div class="row">
+                <!-- <label for="quantityOfTicket">Quantity Of Ticket</label> -->
+                <button  ng-click="setQuantityOfTicket();">Proceed</button>
+                <!-- <p>
+                    No of Quantity:
+                </p>
+                <select ng-model="selectedCount" ng-change="seats.setAvailCount(selectedCount)" ng-options="count as count.val for count in quantities"></select> -->
+            </div>
+            <br><br>
+            <!-- <div class="row switch-card">
+                <p>
+                    Desired Seat Quality:
+                </p>
+                <select class="seatQuality" ng-change="seats.showQuality(seatQuality)" ng-model="seatQuality" ng-options="i for i in seatQualities" name="" aria-label="Toggle ngHide"></select>
+                <div>
+                     {{rows | json}} 
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        
+        <div class="table-responsive">
+            <h2 class="text-right">Book Seats</h2>
+            <hr>
+            Seats left:
+            {{availCount}}<br/>
+            
+            <table class="table" style="width: auto">
+                
+                <!-- <tr ng-repeat="row in seats.map[seatQuality].seats" class="row">
+                    <h3 ng-if="seatQuality">{{seatQuality}}</h3>
+                    <td class="SRow1">
+                        <div class="itemSeat" ng-repeat="seat in row">
+                            <span ng-show="$first">{{seat.letter}}</span>
+                            <a ng-class="{'selected': seat.check, 'available': (!seat.check && !seat.booked),  'blocked': seat.booked}" ng-click="seats.select({rang:seatQuality, row:row, seat: seat}, selectedCount)">{{seat.val}}</a>
+                        </div>
+                    </td>
+                </tr> -->
+                <tr ng-repeat="row in seatsData" class="row">
+                    <!-- <h3 ng-if="seatQuality">{{seatQuality}}</h3> -->
+                    <td class="SRow1">
+                        <div class="itemSeat" ng-repeat="seat in row">
+                            <span ng-show="$first">{{seat.letter}}</span>
+                            <a ng-class="{'selected': seat.check, 'available': (!seat.check && !seat.booked),  'blocked': seat.booked}" ng-click="selectSeat(seat)">{{seat.val}}</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <a>
+                <button class="cta proceed" ng-click="storeSeat()">Finish</button>
+            </a>
+        </div>
+
+    </div>
+</div>
