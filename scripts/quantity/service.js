@@ -2,6 +2,7 @@ angular.module('bookTicketModule')
     .factory('seatsManager', SeatsFactory);
 
 function SeatsFactory($rootScope, $timeout) {
+    var bookedSeatArr = [];
     drawSeats = function(startLetter, rows, cols) {
         var rowArray = [],
             columnArray = [];
@@ -184,11 +185,26 @@ function SeatsFactory($rootScope, $timeout) {
         return bookedSession;
     }
 
+    function saveBookedTickets(customerName,arr){
+        //bookedTicketArr = [];
+        var obj = {
+            "name" : customerName,
+            "bookedTicket" : arr
+        }
+        bookedSeatArr.push(obj);
+        console.log(bookedSeatArr);
+    }
+
+    function getSavedTickets(){
+        return bookedSeatArr;
+    }
+
     var factory = {
         drawSeats: drawSeats,
         map: seats,
         select: selectSeats,
         availCount: {},
+        bookedTicketArr : [],
         setAvailCount: function(count) {
             checkSelected(count);
         },
@@ -202,7 +218,9 @@ function SeatsFactory($rootScope, $timeout) {
             this.availCount.val = this.availCount.id;
             removeAllCheck();
         },
-        bookCheckedSeats: bookCheckedSeats
+        bookCheckedSeats: bookCheckedSeats,
+        saveBookedTickets: saveBookedTickets,
+        getSavedTickets:getSavedTickets
     };
     return factory
 }

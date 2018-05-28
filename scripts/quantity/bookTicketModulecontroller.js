@@ -1,7 +1,11 @@
 angular.module('bookTicketModule')
-    .controller('bookTicketModuleController', ['$scope', '$window','seatsManager', function($scope, $window, seatsManager) {
+    .controller('bookTicketModuleController', ['$scope', '$window','seatsManager','ticketBookService', function($scope, $window, seatsManager,ticketBookService) {
+                 var bookedSeatArr = [];
             var init = function() {
                 $scope.countOfSelctedTicket = 0;
+                //$scope.enableticketbook = false;
+                $scope.enableButtonToBookTicket = false;
+               
                 //$scope.premiumSeats = seatsManager.getSeats('Premium');
                 //$scope.standardSeats = seatsManager.getSeats('Standard');
                 // $scope.seats = seatsManager;
@@ -41,41 +45,68 @@ angular.module('bookTicketModule')
                 console.log($scope.customerName);
                 //console.log();
                 $scope.availCount = $scope.quantityOfTicket;
+                $scope.disableTheInput = true;
+                $scope.enableticketbook = true;
             };
 
-            
+
             $scope.selectSeat = function(seat){
                 console.log(seat);
+                
                 if($scope.availCount != 0){
                     $scope.countOfSelctedTicket++;
                     //if(){
                         $scope.availCount--;
+                        seat.check = true;
+                    bookedSeatArr.push({seat});
                    // }
                 }else{
                     alert("Sorry you cannot select more");
+                    $scope.enableButtonToBookTicket = true;
+                    console.log(bookedSeatArr);
+                    seatsManager.saveBookedTickets($scope.customerName,bookedSeatArr);
+                   // ticketBookService.setBookedTicket($scope.customerName,bookedSeatArr);
                 }
             };
-            $scope.storeSeat = function() {
-                if ($scope.seats.availCount.val != 0) {
-                    $window.alert("You haven't selected " +
-                        $scope.seats.availCount.val + " seats");
-                    return;
-                }
-                var sessionInfo = seatsManager.bookCheckedSeats();
-                seatsManager.setAvailCount($scope.selectedCount);
+            // $scope.storeSeat = function() {
+            //     if ($scope.seats.availCount.val != 0) {
+            //         $window.alert("You haven't selected " +
+            //             $scope.seats.availCount.val + " seats");
+            //         return;
+            //     }
+            //     var sessionInfo = seatsManager.bookCheckedSeats();
+            //     seatsManager.setAvailCount($scope.selectedCount);
 
-                // console.log(sessionInfo.checkedSeats);
+            //     // console.log(sessionInfo.checkedSeats);
 
-                $scope.alertMsg = [];
-                angular.forEach(sessionInfo.checkedSeats, function(v, k) {
-                    for (var i = 0; i < v.length; i++) {
-                        $scope.alertMsg.push(v[i].val + v[i].letter);
-                    }
-                });
+            //     $scope.alertMsg = [];
+            //     angular.forEach(sessionInfo.checkedSeats, function(v, k) {
+            //         for (var i = 0; i < v.length; i++) {
+            //             $scope.alertMsg.push(v[i].val + v[i].letter);
+            //         }
+            //     });
                 
-                $window.alert('Thank you for Booking ' + sessionInfo.count + ' seats. ' + 
-                        'Your seats are: ' + $scope.alertMsg.join(', '));
-            };
+            //     $window.alert('Thank you for Booking ' + sessionInfo.count + ' seats. ' + 
+            //             'Your seats are: ' + $scope.alertMsg.join(', '));
+            // };
+
+            $scope.storeSeat = function(){
+                console.log();
+                $scope.showbookedseat = seatsManager.getSavedTickets();
+                console.log($scope.showbookedseat);
+                
+
+            }
+
+            $scope.bookTicketForAnotherUser =function(){
+                $scope.quantityOfTicket = 1;
+                $scope.disableTheInput = false;
+                $scope.enableticketbook = false;
+                $scope.customerName = '';
+                $scope.availCount = 0;
+
+
+            }
 
         init();
     }]);

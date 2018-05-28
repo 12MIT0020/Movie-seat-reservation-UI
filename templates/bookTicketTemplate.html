@@ -6,27 +6,52 @@
                     No of Quantity:
                 </p> -->
                 <label for="customerName">Customer Name :</label>
-                <input ng-model="customerName"></input>
+                <input ng-model="customerName" ng-disabled="disableTheInput"></input>
             </div>
             <br><br>
             <div class="row">
                 <label for="quantityOfTicket">Quantity Of Ticket :</label>
-                <input ng-model="quantityOfTicket" ng-change="setQuantityOfTicket(quantityOfTicket);"></input>
+                <input ng-model="quantityOfTicket" ng-disabled="disableTheInput"></input>
                 <!-- <p>
                     No of Quantity:
                 </p>
                 <select ng-model="selectedCount" ng-change="seats.setAvailCount(selectedCount)" ng-options="count as count.val for count in quantities"></select> -->
             </div>
             <br><br>
-            <div class="row">
+            <div class="row" >
                 <!-- <label for="quantityOfTicket">Quantity Of Ticket</label> -->
-                <button  ng-click="setQuantityOfTicket();">Proceed</button>
+                <button ng-disabled="enableticketbook" ng-click="setQuantityOfTicket();">Proceed</button>
                 <!-- <p>
                     No of Quantity:
                 </p>
                 <select ng-model="selectedCount" ng-change="seats.setAvailCount(selectedCount)" ng-options="count as count.val for count in quantities"></select> -->
             </div>
             <br><br>
+            
+            <div ng-show ="enableButtonToBookTicket" class="row">
+                <!-- <label for="quantityOfTicket">Quantity Of Ticket</label> -->
+                
+                <button  ng-click="bookTicketForAnotherUser()">Book Another</button>
+                <!-- <p>
+                    No of Quantity:
+                </p>
+                <select ng-model="selectedCount" ng-change="seats.setAvailCount(selectedCount)" ng-options="count as count.val for count in quantities"></select> -->
+            </div>
+            <div  class="row">
+                
+                    <!-- <table class="table" style="width: auto">
+                    
+                        <tr ng-repeat="row in seatsData" class="row">
+                            
+                            <td class="SRow1">
+                                <div class="itemSeat" ng-repeat="seat in showbookedseat">
+                                    <span ng-show="$first">{{seat.letter}}</span>
+                                    <a ng-class="{'selected': seat.check, 'available': (!seat.check && !seat.booked),  'blocked': seat.booked}" ng-click="selectSeat(seat)">{{seat.val}}</a>
+                                </div>
+                            </td>
+                        </tr>
+                </table> -->
+            </div>
             <!-- <div class="row switch-card">
                 <p>
                     Desired Seat Quality:
@@ -39,7 +64,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6" ng-show="enableticketbook">
         
         <div class="table-responsive">
             <h2 class="text-right">Book Seats</h2>
